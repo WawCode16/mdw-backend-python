@@ -1,17 +1,34 @@
-import json
-
 from aiohttp import web
+from aiohttp_utils import Response, routing, negotiation, run
 
-from database import create_database, session, Place
+from database import session, Place
 
-
-async def handle(request):
-    places = session().query(Place).all()
-    return web.Response(text=json.dumps({'results': [p.to_json() for p in places]}))
+app = web.Application(router=routing.ResourceRouter())
 
 
-create_database()
+class PlaceResource:
 
-app = web.Application()
-app.router.add_get('/', handle)
-web.run_app(app)
+    async def get(self, request):
+        return Response({
+            'results': [p.to_json() for p in session()   .query(Place).all()]
+        })
+
+
+app.router.add_resource_object('/', PlaceResource())
+
+# Content negotiation
+negotiation.setup(
+    app, renderers={
+        'application/json': negotiation.render_json
+    }
+)
+
+if __name__ == '__main__':
+    # Development server
+    run(
+        app,
+        app_uri='server:app',
+        reload=True,
+        host='0.0.0.0',
+        port=8080
+    )
