@@ -1,0 +1,13 @@
+version: '2'
+services:
+  db:
+    image: postgres
+
+  web:
+    command: dockerize -wait tcp://db:5432 python3 server.py
+    build:
+        context: .
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/src/
