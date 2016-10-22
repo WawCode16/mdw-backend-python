@@ -1,0 +1,6 @@
+"","address","lat","lon","id","name","rating","types","type"
+"1","Stokłosy 3, Warszawa, Poland",52.1591383,21.0321183,"f3371c992133525bd75f006ba8112d63da214191","Akademia Finansów i Biznesu Vistula",4.2,"{university: 1, point_of_interest: 1, establishment: 1}","university"
+"2","Dobra 56/66, Warszawa, Poland",52.242647,21.0248865,"f1293331406cbee89e783031ebe3b58124326957","Biblioteka Uniwersytecka w Warszawie",4.7,"{university: 1, library: 1, point_of_interest: 1, establishment: 1}","university"
+"3","Burakowska 16, Warszawa, Poland",52.256679,20.9788916,"976860b3b86753cb5f105c02af2a821c6fa30935","Maciej Ziolkowski",NA,"{university: 1, point_of_interest: 1, establishment: 1}","university"
+"4","Laskowa 4, 05-200 Wołomin, Poland",52.3503715,21.2375343,"ba35620874fb03cb2dd2b92b790163489285714d","Wyższa Szkoła Współpracy Międzynarodowej i Regionalnej im. Zygmunta Glogera",NA,"{point_of_interest: 1, establishment: 1}","university"
+"5","Ulster University, Cromore Rd, Coleraine BT52 1SA, United Kingdom",55.1497581,-6.6751586,"ac7040ce438dd5499bceb2498384b496c4a99380","Ulster University",4.6,"{university: 1, point_of_interest: 1, establishment: 1}","university"
