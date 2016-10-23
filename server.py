@@ -23,7 +23,14 @@ class PlaceResource:
             res = s.get_stats(addr, data)
             return Response({'reseults': res})
         else:
-            data = {'results': [p.to_json() for p in session().query(Place).all()]}
+            off = int(request.GET.get('offset', 0))
+            per_page = int(request.GET.get('limit', 20))
+            data = {
+                'offset': off,
+                'limit': per_page,
+                'next': '?offset={}&limit={}'.format(off + per_page, per_page),
+                'results': [p.to_json() for p in session().query(Place).offset(off).limit(per_page).all()]
+            }
             return Response(data)
 
     async def post(self, request):
