@@ -4,3 +4,4 @@ aiohttp_utils
 sqlalchemy
 psycopg2
 pandas
+geopy

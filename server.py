@@ -7,6 +7,7 @@ from aiohttp_utils.negotiation import JSONRenderer
 
 from database import session, Place, create_database
 from load_data_from_csv import load_data
+from statistics import Stats
 
 app = web.Application(router=routing.ResourceRouter())
 
@@ -14,8 +15,16 @@ app = web.Application(router=routing.ResourceRouter())
 class PlaceResource:
 
     async def get(self, request):
-        data = {'results': [p.to_json() for p in session().query(Place).all()]}
-        return Response(data)
+        addr = request.GET.get('addr')
+        if addr:
+            addr = addr.replace('+', ' ')
+            data = {'results': [p.to_json() for p in session().query(Place).all()]}
+            s = Stats()
+            res = s.get_stats(addr, data)
+            return Response({'reseults': res})
+        else:
+            data = {'results': [p.to_json() for p in session().query(Place).all()]}
+            return Response(data)
 
     async def post(self, request):
         path = request.GET.get('path')
