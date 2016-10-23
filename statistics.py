@@ -18,7 +18,6 @@ def address_to_coord(address):
 
 
 class Stats(object):
-    def __init__(self):
 
     def map_category(self, place_type):
         category = ''
