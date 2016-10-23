@@ -50,11 +50,14 @@ class StatsResource:
     async def get(self, request):
         addr = request.GET.get('addr')
         res = {'stats': None}
-        if addr:
-            addr = addr.replace('+', ' ')
-            data = {'results': [p.to_json() for p in session().query(Place).all()]}
-            s = Stats()
-            res = s.get_stats(addr, data)
+        try:
+            if addr:
+                addr = addr.replace('+', ' ')
+                data = {'results': [p.to_json() for p in session().query(Place).all()]}
+                s = Stats()
+                res = s.get_stats(addr, data)
+        except Exception:
+            pass
         return CORSResponse({'stats': res})
 
 
