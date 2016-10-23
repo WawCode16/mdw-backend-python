@@ -15,23 +15,15 @@ app = web.Application(router=routing.ResourceRouter())
 class PlaceResource:
 
     async def get(self, request):
-        addr = request.GET.get('addr')
-        if addr:
-            addr = addr.replace('+', ' ')
-            data = {'results': [p.to_json() for p in session().query(Place).all()]}
-            s = Stats()
-            res = s.get_stats(addr, data)
-            return Response({'reseults': res})
-        else:
-            off = int(request.GET.get('offset', 0))
-            per_page = int(request.GET.get('limit', 20))
-            data = {
-                'offset': off,
-                'limit': per_page,
-                'next': '?offset={}&limit={}'.format(off + per_page, per_page),
-                'results': [p.to_json() for p in session().query(Place).offset(off).limit(per_page).all()]
-            }
-            return Response(data)
+        off = int(request.GET.get('offset', 0))
+        per_page = int(request.GET.get('limit', 20))
+        data = {
+            'offset': off,
+            'limit': per_page,
+            'next': '?offset={}&limit={}'.format(off + per_page, per_page),
+            'results': [p.to_json() for p in session().query(Place).offset(off).limit(per_page).all()]
+        }
+        return Response(data)
 
     async def post(self, request):
         path = request.GET.get('path')
@@ -46,7 +38,21 @@ class PlaceResource:
         return Response({'result': 'loaded {}'.format(' '.join(files))})
 
 
+class StatsResource:
+
+    async def get(self, request):
+        addr = request.GET.get('addr')
+        res = {'stats': None}
+        if addr:
+            addr = addr.replace('+', ' ')
+            data = {'results': [p.to_json() for p in session().query(Place).all()]}
+            s = Stats()
+            res = s.get_stats(addr, data)
+        return Response({'stats': res})
+
+
 app.router.add_resource_object('/', PlaceResource())
+app.router.add_resource_object('/stats', StatsResource())
 
 
 class CustomJSONRenderer(JSONRenderer):
