@@ -30,7 +30,7 @@ class PlaceResource:
             'next': '?offset={}&limit={}'.format(off + per_page, per_page),
             'results': [p.to_json() for p in session().query(Place).offset(off).limit(per_page).all()]
         }
-        return Response(data)
+        return CORSResponse(data)
 
     async def post(self, request):
         path = request.GET.get('path')
@@ -42,7 +42,7 @@ class PlaceResource:
         files = os.listdir(dir)
         for file in files:
             load_data('{}/{}'.format(dir, file))
-        return Response({'result': 'loaded {}'.format(' '.join(files))})
+        return CORSResponse({'result': 'loaded {}'.format(' '.join(files))})
 
 
 class StatsResource:
@@ -55,7 +55,7 @@ class StatsResource:
             data = {'results': [p.to_json() for p in session().query(Place).all()]}
             s = Stats()
             res = s.get_stats(addr, data)
-        return Response({'stats': res})
+        return CORSResponse({'stats': res})
 
 
 app.router.add_resource_object('/', PlaceResource())
