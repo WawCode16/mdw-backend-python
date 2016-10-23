@@ -12,6 +12,13 @@ from statistics import Stats
 app = web.Application(router=routing.ResourceRouter())
 
 
+class CORSResponse(Response):
+    def __init__(self, *args, **kwargs):
+        kwargs.headers = kwargs.get('headers', {})
+        kwargs.headers['Access-Control-Allow-Origin'] = '*'
+        super().__init__(*args, **kwargs)
+
+
 class PlaceResource:
 
     async def get(self, request):
