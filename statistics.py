@@ -25,7 +25,7 @@ class Stats(object):
             category = 'health'
         elif place_type in ['park']:
             category = 'leisure'
-        elif place_type in ['kino']:
+        elif place_type in ['kino', 'teatr']:
             category = 'entertainment'
         elif place_type in ['cafe', 'restaurant']:
             category = 'dining'
