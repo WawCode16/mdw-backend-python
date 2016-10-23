@@ -14,8 +14,8 @@ app = web.Application(router=routing.ResourceRouter())
 
 class CORSResponse(Response):
     def __init__(self, *args, **kwargs):
-        kwargs.headers = kwargs.get('headers', {})
-        kwargs.headers['Access-Control-Allow-Origin'] = '*'
+        kwargs['headers'] = kwargs.get('headers', {})
+        kwargs['headers']['Access-Control-Allow-Origin'] = '*'
         super().__init__(*args, **kwargs)
 
 
